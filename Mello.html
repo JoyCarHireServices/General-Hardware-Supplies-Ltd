@@ -1,0 +1,772 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>BuildRight — Construction Materials Online Store</title>
+  <meta name="description" content="BuildRight — modern online store for construction materials: cement, bricks, timber, tools and more." />
+  <style>
+    /* ------------------------------------------------------------------
+       General Hardware Supplies Ltd — single-file HTML + CSS
+       - Responsive layout (header / hero / catalogue / footer)
+       - Catalogue uses CSS grid and a simple filter/search UI
+       - Light, modern design suitable for construction suppliers
+       ------------------------------------------------------------------ */
+
+    :root{
+      --bg: #f6f7f9;
+      --card: #ffffff;
+      --muted: #6b7280;
+      --accent: #f97316; /* orange, like construction safety color */
+      --accent-dark: #c65b0f;
+      --primary: #0f172a; /* dark text */
+      --shadow: 0 6px 18px rgba(15,23,42,0.08);
+      --radius: 12px;
+      --gap: 1.25rem;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      background:linear-gradient(180deg,var(--bg),#eef2f6);
+      color:var(--primary);
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      line-height:1.45;
+      padding:2rem;
+      background-image: url('');
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    /* Header */
+    header{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:1rem;
+      max-width:1200px;
+      margin:0 auto 1.25rem auto;
+    }
+
+    .brand{
+      display:flex;
+      gap:.75rem;
+      align-items:center;
+      text-decoration:none;
+      color:var(--primary);
+    }
+    .logo{
+      width:48px;height:48px;border-radius:10px;background:linear-gradient(135deg,var(--accent),#f59e0b);display:grid;place-items:center;color:white;font-weight:700;box-shadow:var(--shadow)
+    }
+    nav{display:flex;gap:1rem;align-items:center}
+    nav a{color:var(--muted);text-decoration:none;font-weight:600}
+    .cta{background:var(--accent);color:white;padding:.6rem .9rem;border-radius:10px;text-decoration:none;font-weight:700}
+
+    /* Main layout */
+    .container{
+      max-width:1200px;margin:0 auto;display:flex;flex-direction:column;gap:1.5rem;
+    }
+
+    /* Hero */
+    .hero{
+      grid-column:1/-1;display:flex;justify-content:space-between;align-items:center;gap:1rem;padding:1.2rem;border-radius:var(--radius);background:linear-gradient(90deg,#ffffff, #fbfbfd);box-shadow:var(--shadow)
+    }
+    .hero h1{margin:0;font-size:1.3rem}
+    .hero p{margin:.25rem 0 0 0;color:var(--muted)}
+
+   
+    .search{display:flex;gap:.5rem;margin-bottom:.75rem}
+    .search input{flex:1;padding:.6rem;border-radius:8px;border:1px solid #e6e9ef}
+    .filter-group{margin-top:1rem}
+    .filter-group h4{margin:.25rem 0;color:var(--muted);font-size:.9rem}
+    .checkbox{display:flex;align-items:center;gap:.5rem;margin:.35rem 0}
+    .btn-filter{display:inline-block;padding:.5rem .7rem;border-radius:8px;border:0;background:#eef3ff;color:#1e40af;font-weight:700;margin-top:.5rem}
+
+    /* Catalogue */
+    .catalogue{
+      display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;
+    }
+    .product{
+      background:var(--card);padding:1rem;border-radius:12px;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:.6rem;transition:transform .18s ease, box-shadow .18s ease;
+    }
+    .product:hover{transform:translateY(-6px);box-shadow:0 12px 30px rgba(15,23,42,0.12)}
+    .media{height:140px;border-radius:10px;overflow:hidden;display:grid;place-items:center;background:linear-gradient(180deg,#f8fafc,#fff);border:1px solid #f1f5f9}
+    .media img{max-width:100%;max-height:100%;object-fit:contain}
+    .title{font-weight:700;font-size:.98rem}
+    .meta{color:var(--muted);font-size:.9rem}
+    .price{margin-top:auto;font-weight:800;color:var(--accent)}
+    .product .actions{display:flex;gap:.5rem;margin-top:.5rem}
+    .btn{flex:1;padding:.5rem .6rem;border-radius:10px;border:0;background:#0ea5a2;color:white;font-weight:700;text-align:center}
+    .btn.add{background:var(--accent)}
+
+    /* utility */
+    .topbar{display:flex;gap:1rem;align-items:center;margin-bottom:.75rem}
+    .sort{margin-left:auto;display:flex;gap:.5rem;align-items:center}
+
+    footer{
+      background-color: #1f2937;
+      color: white;
+      padding: 40px;
+      font-family: 'Poppins', sans-serif;
+      text-align: center;
+    }
+
+    .footer-container{
+      display: grid;
+      gap: 40px;
+      max-width: 1200px;
+      margin: auto;   
+    }
+
+    /*company section*/
+    .footer-company h2 {
+    color: #fbbf24;
+    margin-bottom: 15px;
+    }
+
+    .footer-company p {
+      line-height: 1.6;
+      font-size: 14px;
+    }
+
+    /*contact info*/
+    .footer-contact p {
+      font-size: 14px;
+      margin: 6px 0;
+    }
+
+    /*social icons*/
+    .social-icons a {
+     margin-right: 10px;
+     display: inline-block;
+     text-decoration: none;
+     color: #f9fafb;
+     font-size: 18px;
+     transition: color 0.3s;
+    }
+
+    .social-icons a:hover{
+      color: #fbbf24;
+    }
+
+    /*Bottom section*/
+    .footer-bottom{
+      text-align: center;
+      border-top: 1px solid #374151;
+      padding-top: 15px;
+      margin-top: 40px;
+      font-size: 14px;
+    }
+
+
+
+     /* WhatsApp Button */
+    .whatsapp-button {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: green;
+      color: white;
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 30px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      z-index: 1001;
+      transition: transform 0.3s ease;
+    }
+
+    .whatsapp-button:hover {
+      transform: scale(1.1);
+    }
+
+   
+
+    .stars {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      font-size: 35px;
+    }
+
+    .stars i.active {
+      color: gold;
+    }
+
+    .result {
+      margin-top: 10px;
+      font-size: 18px;
+      color: #333;
+    }
+
+    /* Reviews Section */
+    .reviews-section {
+      background-color: #fff;
+      padding: 60px 20px;
+      text-align: center;
+    }
+
+    .reviews-section h2 {
+      color: #1e1e1e;
+      font-size: 2rem;
+      margin-bottom: 20px;
+      position: relative;
+    }
+
+    .reviews-section h2::after {
+      content: "";
+      display: block;
+      width: 80px;
+      height: 4px;
+      background: #f9b208;
+      margin: 10px auto 0;
+      border-radius: 2px;
+    }
+
+    .reviews-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      margin-top: 40px;
+      max-width: 1100px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .review-card {
+      background: #fafafa;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .review-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+    }
+
+    .reviewer-name {
+      font-weight: bold;
+      color: #1e1e1e;
+      margin-bottom: 5px;
+    }
+
+    .reviewer-role {
+      color: #666;
+      font-size: 0.9rem;
+      margin-bottom: 10px;
+    }
+
+    .stars {
+      color: #f9b208;
+      font-size: 1.2rem;
+      margin-bottom: 10px;
+    }
+
+    .review-text {
+      font-size: 0.95rem;
+      line-height: 1.5;
+      color: #444;
+    }
+
+    /* Responsive */
+    @media (max-width:980px){
+      .container{grid-template-columns:1fr;}
+    }
+  </style>
+
+   <!-- Font Awesome for icons -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+  />
+</head>
+<body>
+      <header>
+    <a class="brand" href="#" aria-label="BuildRight home">
+      <img src="C:\Users\theok\Documents\Web\New folder (2)\Logo.png" alt="Logo" style="height: 100px;width: 100px;">
+      <div>
+        <div style="font-weight:800; font-size:30px;">GENERAL HARDWARE SUPPLIES LTD</div>
+        <div style="font-size:.8rem;color:var(--muted)">Construction materials & tools</div>
+      </div>
+    </a>
+
+    <nav>
+      <a href="#catalogue">Catalogue</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+      <a class="cta" href="https://wa.me/254103846422?text=Hello%2GENERALo%20HARWARE%20SUPPLIES%20LTD%2C%20I%20will%20like%20to%20get%20a%20quote.">Get a Quote</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <!-- HERO: quick site pitch + search -->
+    <section class="hero">
+      <div>
+        <h1>Reliable building materials delivered fast</h1>
+        <p>From cement and aggregates to timber and tools — shop trusted brands and bulk packs.</p>
+      </div>
+      <div style="min-width:320px;">
+        <!-- search in hero (same form replicated in sidebar for small screens) -->
+        <form onsubmit="event.preventDefault();document.querySelector('.search input').value=document.getElementById('q').value;filterProducts();">
+          <div style="display:flex;gap:.5rem;">
+            <input id="q" type="search" placeholder="Search products, e.g. cement, sand, bricks" style="flex:1;padding:.6rem;border-radius:8px;border:1px solid #e6e9ef">
+            <button class="cta" type="submit">Search</button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+   
+
+    <!-- CATALOGUE AREA -->
+    <section>
+      <div class="topbar">
+        <div style="font-weight:800">BUILDING & CONSTRUCTION</div>
+        <div class="sort">
+          <label class="meta">Sort</label>
+          <select id="sort" onchange="sortProducts()">
+            <option value="featured">Featured</option>
+            <option value="low">Price: Low → High</option>
+            <option value="high">Price: High → Low</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- products grid -->
+      <div id="catalogue" class="catalogue">
+        <!-- Product cards. In a real app these would be rendered dynamically from your database. -->
+
+        <article class="product" data-category="cement" data-price="3000">
+          <div class="media"  style="height:300px;"><img src="C:\Users\theok\Documents\Web\New folder (2)\Simba cement.jpeg" alt="Simba cement"></div>
+           <div class="rating-container">
+   
+    <div class="stars">
+      <i class="star" data-value="1">&#9733;</i>
+      <i class="star" data-value="2">&#9733;</i>
+      <i class="star" data-value="3">&#9733;</i>
+      <i class="star" data-value="4">&#9733;</i>
+      <i class="star" data-value="5">&#9733;</i>
+    </div>
+  </div>
+          <div class="title">Cement — SIMBA CEMENT</div>
+          <div class="meta">Free delivery - NATION WIDE</div>
+          <div class="price">Ksh 580/bag</div>
+          <nav>
+            <a href="https://wa.me/254103846422?text=Hello%20GENERAL%20HARDWARE%20SUPPLIES%20LTD%2C%20I%20will%20like%20to%20order%20SIMBA%20CEMENT.">
+          <div class="actions"><button class="btn">Order</button>
+        </div>
+          </a>
+        </nav>
+        </article>
+
+        <article class="product" data-category="cement" data-price="3000">
+          <div class="media" style="height:300px;"><img src="C:\Users\theok\Documents\Web\New folder (2)\water tank.jpeg" alt="water tank"></div>
+           <div class="rating-container">
+   
+    <div class="stars">
+      <i class="star" data-value="1">&#9733;</i>
+      <i class="star" data-value="2">&#9733;</i>
+      <i class="star" data-value="3">&#9733;</i>
+      <i class="star" data-value="4">&#9733;</i>
+      <i class="star" data-value="5">&#9733;</i>
+    </div>
+          <div class="title">WATER TANKS</div>
+          <div class="meta">
+            <pre>
+✔️1000 Litres Ksh. 4,500
+✔️1500 Litres ksh. 7,500
+✔️2000 Litres Ksh. 10,500
+✔️2500 Litres ksh. 12,500
+✔️3000 Litres Ksh. 14,500
+✔️3500 Litres Ksh. 16,500
+✔️4000 Litres Ksh. 18,500
+✔️4500 Litres Ksh. 21,500
+✔️5000 Litres Ksh. 24,500
+✔️5500 Litres Ksh. 25,500
+✔️6000 Litres Ksh. 27,500
+✔️8000 Litres Ksh. 32,500
+✔️10000 Litres Ksh. 45,500
+✔️16000 Litres Ksh. 98,500
+✔️20000 Litres Ksh. 147,500
+✔️24000 Litres Ksh. 192,500
+We deliver countrywide within 24hrs
+            </pre>
+</div>
+          <div class="price">Ksh 3,000</div>
+          <nav>
+            <a href="https://wa.me/254103846422?text=Hello%2GENERALo%20HARDWARE%20SUPPLIES%20LTD%2C%20I%20will%20like%20to%20make%20an%20order.">
+          <div class="actions"><button class="btn">Order</button>
+        </div>
+          </a>
+        </nav>
+        </article>
+
+        <article class="product" data-category="cement" data-price="3000">
+          <div class="media" style="height:300px;"><img src="C:\Users\theok\Documents\Web\New folder (2)\iron sheets.jpeg" alt="iron sheets"></div>
+           <div class="rating-container">
+   
+    <div class="stars">
+      <i class="star" data-value="1">&#9733;</i>
+      <i class="star" data-value="2">&#9733;</i>
+      <i class="star" data-value="3">&#9733;</i>
+      <i class="star" data-value="4">&#9733;</i>
+      <i class="star" data-value="5">&#9733;</i>
+    </div>
+          <div class="title">IRON SHEETS</div>
+          <div class="meta">
+            <pre>
+Dumuzas 32G Unpainted.
+=KES 300m. 
+Dumuzas 30G Unpainted. 
+=KES 370m.
+Dumurangi 30G 
+Maasai Red Smooth.
+=KES 400.51m.
+Dumurangi 30G 
+Karura Green Smooth. 
+=KES 450m. 
+Dumurangi 30G 
+Bahari Blue Smooth. 
+=KES 430m. 
+Dumurangi 30G 
+Brickred Smooth. 
+=KES 430.51m. 
+Dumurangi 30G 
+Graphite Grey Smooth. 
+=KES 430.51m.
+</pre>
+</div>
+          <div class="price">Ksh 3,000</div>
+          <nav>
+            <a href="https://wa.me/254103846422?text=Hello%2GENERALo%20HARWARE%20SUPPLIES%20LTD%2C%20I%20will%20like%20to%20make%20an%20order.">
+          <div class="actions"><button class="btn">Order</button>
+        </div>
+          </a>
+        </nav>
+        </article>
+      
+
+      
+       <article class="product" data-category="cement" data-price="3000">
+          <div class="media" style="height:300px;"><img src="C:\Users\theok\Documents\Web\New folder (2)\timber.jpeg" alt="timber"></div>
+           <div class="rating-container">
+   
+    <div class="stars">
+      <i class="star" data-value="1">&#9733;</i>
+      <i class="star" data-value="2">&#9733;</i>
+      <i class="star" data-value="3">&#9733;</i>
+      <i class="star" data-value="4">&#9733;</i>
+      <i class="star" data-value="5">&#9733;</i>
+    </div>
+          <div class="title">Timber</div>
+          <div class="meta">Bag / Brand: BuildStrong</div>
+          <div class="price">Ksh 3,000</div>
+          <nav>
+            <a href="https://wa.me/254103846422?text=Hello%2GENERALo%20HARWARE%20SUPPLIES%20LTD%2C%20I%20will%20like%20to%20make%20an%20order.">
+          <div class="actions"><button class="btn">Order</button>
+        </div>
+          </a>
+        </nav>
+        </article>
+
+       <article class="product" data-category="cement" data-price="3000">
+          <div class="media" style="height:300px;"><img src="C:\Users\theok\Documents\Web\New folder (2)\Binding wire.jpeg" alt="Binding wire"></div>
+           <div class="rating-container">
+   
+    <div class="stars">
+      <i class="star" data-value="1">&#9733;</i>
+      <i class="star" data-value="2">&#9733;</i>
+      <i class="star" data-value="3">&#9733;</i>
+      <i class="star" data-value="4">&#9733;</i>
+      <i class="star" data-value="5">&#9733;</i>
+    </div>
+          <div class="title">Binding Wire 16 Gauge(25Kg)</div>
+          <div class="meta">Bag / Brand: BuildStrong</div>
+          <div class="price">Ksh 3,850.00</div>
+          <nav>
+            <a href="https://wa.me/254103846422?text=Hello%2GENERALo%20HARWARE%20SUPPLIES%20LTD%2C%20I%20will%20like%20to%20make%20an%20order.">
+          <div class="actions"><button class="btn">Order</button>
+        </div>
+          </a>
+        </nav>
+        </article>
+
+       <article class="product" data-category="cement" data-price="3000">
+          <div class="media" style="height:300px;"><img src="C:\Users\theok\Documents\Web\New folder (2)\building stones.jpeg" alt="building stones"></div>
+           <div class="rating-container">
+   
+    <div class="stars">
+      <i class="star" data-value="1">&#9733;</i>
+      <i class="star" data-value="2">&#9733;</i>
+      <i class="star" data-value="3">&#9733;</i>
+      <i class="star" data-value="4">&#9733;</i>
+      <i class="star" data-value="5">&#9733;</i>
+    </div>
+          <div class="title">Building Stones 6 x 6</div>
+          <div class="meta">Bag / Brand: BuildStrong</div>
+          <div class="price">Ksh 60.00/pc</div>
+          <nav>
+            <a href="https://wa.me/254103846422?text=Hello%2GENERALo%20HARWARE%20SUPPLIES%20LTD%2C%20I%20will%20like%20to%20make%20an%20order.">
+          <div class="actions"><button class="btn">Order</button>
+        </div>
+          </a>
+        </nav>
+        </article>
+        
+
+       
+       <article class="product" data-category="cement" data-price="3000">
+          <div class="media" style="height:300px;"><img src="C:\Users\theok\Documents\Web\New folder (2)\deformed steel bar.jpeg" alt="deformed steel bar"></div>
+           <div class="rating-container">
+   
+    <div class="stars">
+      <i class="star" data-value="1">&#9733;</i>
+      <i class="star" data-value="2">&#9733;</i>
+      <i class="star" data-value="3">&#9733;</i>
+      <i class="star" data-value="4">&#9733;</i>
+      <i class="star" data-value="5">&#9733;</i>
+    </div>
+          <div class="title">Deformed Steel Bar</div>
+          <div class="meta">Bag / Brand: BuildStrong</div>
+          <div class="price">Ksh 3,000</div>
+          <nav>
+            <a href="https://wa.me/254103846422?text=Hello%2GENERALo%20HARWARE%20SUPPLIES%20LTD%2C%20I%20will%20like%20to%20make%20an%20order.">
+          <div class="actions"><button class="btn">Order</button>
+        </div>
+          </a>
+        </nav>
+        </article>
+
+        <article class="product" data-category="cement" data-price="3000">
+          <div class="media" style="height: 300px;"><img src="C:\Users\theok\Downloads\crown-paints-granite-finish-paint-L.jpg" alt="crown-paints-granite-finish-paint-L"></div>
+           <div class="rating-container">
+   
+    <div class="stars">
+      <i class="star" data-value="1">&#9733;</i>
+      <i class="star" data-value="2">&#9733;</i>
+      <i class="star" data-value="3">&#9733;</i>
+      <i class="star" data-value="4">&#9733;</i>
+      <i class="star" data-value="5">&#9733;</i>
+    </div>
+          <div class="title">Paint</div>
+          <div class="meta">Bag / Brand: BuildStrong</div>
+          <div class="price">Ksh 3,000</div>
+          <nav>
+            <a href="https://wa.me/254103846422?text=Hello%2GENERALo%20HARWARE%20SUPPLIES%20LTD%2C%20I%20will%20like%20to%20make%20an%20order.">
+          <div class="actions"><button class="btn">Order</button>
+        </div>
+          </a>
+        </nav>
+        </article>
+ 
+         <article class="product" data-category="cement" data-price="3000">
+          <div class="media" style="height:300px;"><img src="C:\Users\theok\Documents\Web\New folder (2)\Iron nails.jpg" alt="Iron nails"></div>
+           <div class="rating-container">
+   
+    <div class="stars">
+      <i class="star" data-value="1">&#9733;</i>
+      <i class="star" data-value="2">&#9733;</i>
+      <i class="star" data-value="3">&#9733;</i>
+      <i class="star" data-value="4">&#9733;</i>
+      <i class="star" data-value="5">&#9733;</i>
+    </div>
+          <div class="title">Iron nails</div>
+          <div class="meta">Bag / Brand: BuildStrong</div>
+          <div class="price">Ksh 3,000</div>
+          <nav>
+            <a href="https://wa.me/254103846422?text=Hello%2GENERALo%20HARWARE%20SUPPLIES%20LTD%2C%20I%20will%20like%20to%20make%20an%20order.">
+          <div class="actions"><button class="btn">Order</button>
+        </div>
+          </a>
+        </nav>
+        </article>
+
+         <article class="product" data-category="cement" data-price="3000">
+          <div class="media" style="height: 300px"><img src="C:\Users\theok\Documents\Web\New folder (2)\ceiling boards.jpeg" alt="ceiling boards"></div>
+           <div class="rating-container">
+   
+    <div class="stars">
+      <i class="star" data-value="1">&#9733;</i>
+      <i class="star" data-value="2">&#9733;</i>
+      <i class="star" data-value="3">&#9733;</i>
+      <i class="star" data-value="4">&#9733;</i>
+      <i class="star" data-value="5">&#9733;</i>
+    </div>
+          <div class="title">Ceiling Boards</div>
+          <div class="meta">Bag / Brand: BuildStrong</div>
+          <div class="price">Ksh 3,000</div>
+          <nav>
+            <a href="https://wa.me/254103846422?text=Hello%2GENERALo%20HARWARE%20SUPPLIES%20LTD%2C%20I%20will%20like%20to%20make%20an%20order.">
+          <div class="actions"><button class="btn">Order</button>
+        </div>
+          </a>
+        </nav>
+        </article>
+
+        <!-- Add more product cards as needed -->
+
+      </div>
+    </section>
+
+    <!-- Customer Reviews Section -->
+  <section class="reviews-section">
+    <h2>What Our Clients Say</h2>
+
+    <div class="reviews-container">
+      <div class="review-card">
+        <div class="reviewer-name">John Mwangi</div>
+        <div class="reviewer-role">Home Builder</div>
+        <div class="stars">★★★★★</div>
+        <p class="review-text">
+          BuildRight delivered quality materials on time. Their customer service was exceptional. Highly recommended!
+        </p>
+      </div>
+
+      <div class="review-card">
+        <div class="reviewer-name">Grace Otieno</div>
+        <div class="reviewer-role">Architect</div>
+        <div class="stars">★★★★☆</div>
+        <p class="review-text">
+          Reliable supplier for all our construction projects. Prices are fair and the team is very professional.
+        </p>
+      </div>
+
+      <div class="review-card">
+        <div class="reviewer-name">Peter Kamau</div>
+        <div class="reviewer-role">Contractor</div>
+        <div class="stars">★★★★★</div>
+        <p class="review-text">
+          Excellent experience from start to finish. Materials were top quality, and delivery was fast.
+        </p>
+      </div>
+    </div>
+  </section>
+  </main>
+
+  <!-- Footer Section -->
+  <footer>
+    <div class="footer-section">
+      <h3>About General Hardware Supplies Ltd</h3>
+      <p>We are a trusted construction company delivering quality building materials and engineering services across Kenya. Your vision, our foundation.</p>
+    </div>
+
+   
+
+    <div class="footer-section">
+      <h3>Contact Us</h3>
+      <p>📍 Nairobi, Kenya</p>
+      <p>📞 +254 103846422 </p>
+      <p>✉️ info@generalhardwaresuppliesltd.co.ke</p>
+    </div>
+
+    <div class="footer-section">
+     <div class="footer-bottom">
+    © 2025 General Harware Supplies LTD. All Rights Reserved.
+  </div>
+    </div>
+  </footer>
+
+  
+
+
+ 
+
+   <!-- WhatsApp Button -->
+  <a
+    href="https://wa.me/254103846422?text=Welcome%20to%20Mabati%20Rolling%20Mills%2C%20I%27m%20interested%20in%20your%20products."
+    class="whatsapp-button"
+    target="_blank"
+    title="Chat with us on WhatsApp"
+  >
+    <i class="fab fa-whatsapp"></i>
+
+  <!-- Minimal JS for client-side filtering/sorting (keeps the demo self-contained) -->
+  <script>
+    // Helper: parse price value as number
+    const toNum = s => Number(s) || 0;
+
+    function filterProducts(){
+      const q = (document.getElementById('searchSidebar')?.value || document.getElementById('q')?.value || '').toLowerCase();
+      const cats = Array.from(document.querySelectorAll('input[name="cat"]:checked')).map(i => i.value);
+      const priceFilter = document.querySelector('input[name="price"]:checked')?.value || 'all';
+
+      document.querySelectorAll('#catalogue .product').forEach(card => {
+        const title = card.querySelector('.title').textContent.toLowerCase();
+        const meta = card.querySelector('.meta').textContent.toLowerCase();
+        const cat = card.dataset.category || '';
+        const price = toNum(card.dataset.price);
+
+        // text search
+        const matchesText = q === '' || title.includes(q) || meta.includes(q);
+        // category match (if none selected -> match all)
+        const matchesCat = cats.length === 0 || cats.includes(cat);
+        // price match
+        let matchesPrice = true;
+        if(priceFilter === 'low') matchesPrice = price < 1000;
+        if(priceFilter === 'mid') matchesPrice = price >= 1000 && price <= 5000;
+        if(priceFilter === 'high') matchesPrice = price > 5000;
+
+        card.style.display = (matchesText && matchesCat && matchesPrice) ? '' : 'none';
+      });
+    }
+
+    function sortProducts(){
+      const sel = document.getElementById('sort').value;
+      const container = document.getElementById('catalogue');
+      const nodes = Array.from(container.querySelectorAll('.product')).filter(n => n.style.display !== 'none');
+
+      if(sel === 'low') nodes.sort((a,b)=>toNum(a.dataset.price)-toNum(b.dataset.price));
+      else if(sel === 'high') nodes.sort((a,b)=>toNum(b.dataset.price)-toNum(a.dataset.price));
+      else nodes.sort((a,b)=>0); // featured / default
+
+      nodes.forEach(n=>container.appendChild(n));
+    }
+
+     const stars = document.querySelectorAll('.star');
+    const result = document.querySelector('.result');
+
+    stars.forEach((star, index) => {
+      star.addEventListener('click', () => {
+        // Remove active class from all stars
+        stars.forEach(s => s.classList.remove('active'));
+        // Add active class to selected stars
+        for (let i = 0; i <= index; i++) {
+          stars[i].classList.add('active');
+        }
+        // Show result
+        result.textContent = `You rated this ${index + 1} out of 5`;
+      });
+
+      // Optional: hover effect
+      star.addEventListener('mouseover', () => {
+        stars.forEach((s, i) => {
+          s.style.color = i <= index ? 'gold' : '#ccc';
+        });
+      });
+      star.addEventListener('mouseout', () => {
+        stars.forEach((s) => s.style.color = s.classList.contains('active') ? 'gold' : '#ccc');
+      });
+    });
+
+    // keep search inputs in sync
+    document.getElementById('searchSidebar').addEventListener('input', () => setTimeout(filterProducts, 150));
+
+    // Initial render
+    filterProducts();
+  </script>
+</body>
+</html>
